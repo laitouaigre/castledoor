@@ -1,0 +1,154 @@
+<!-- TODO: check copyright? -->
+<!---------- ФОРУМНЫЕ СКРИПТЫ ----------->
+<script>
+/*   Свернуть спойлер  */
+function clickSP(i) {setTimeout("$('#spoiler"+i+"').click()",100);}
+$('.quote-box.spoiler-box > div').each(function(i) {
+$(this).attr('id','spoiler'+i).append('<a name="220_'+i+'" style="position:absolute;margin-top:-200px"></a>');
+$(this).next('blockquote').append('<a href="#220_'+i+'" onclick="clickSP('+i+')" style="float:right">Свернуть спойлер</a>');
+});  //Конец скрипта
+
+/* Восстановление последнего поста при утере by Человек-Шаман */
+$(document).ready(function() {
+  $('#addition-area').append(function() {
+    return $('<div>Восстановить последний пост</div>').click(restoreLastPost);
+  });
+  function restoreLastPost() {
+    $('#main-reply').val(localStorage.ReservePost);
+  };
+}); // Конец
+</script>
+<!-- END ФОРУМНЫЕ СКРИПТЫ-->
+
+<!----- Замена ссылок в Постах на абсолютные by Leraje ----->
+<script type="text/javascript">
+$(".post-content a").each(function (){
+  var L=$(this).attr("href");var b="click.p";
+  L=L.replace(/^.*click\.php\?(.*)$/mgi,"$1");
+  if(L.search(/viewtopic\.php\?id=.*#p/)!=-1){
+    var p=L.replace(/^.*?#p(\d+)$/mgi,"$1");
+    L=L.replace(/\?id=.*$/,"");
+    L+="?pid="+p+"#p"+p;
+  }
+  $(this).attr("href",L);
+});
+</script>
+<!-- Абсолютная ссылка по ПКМ копировать адрес ссылки на дату сообщения by Leraje -->
+<script type="text/javascript">
+(function() {
+    $('a.permalink').each(function() {
+        let newLink = $(this).attr('href');
+        let winHttp = document.URL.split(':')[0];
+        let newLinkPtp = winHttp + '://' + location.hostname + '/viewtopic.php?pid=';
+        let a = $(this).parents('.post').attr('id').replace(/^p/i, '');
+        newLink = newLinkPtp + a + '#p' + a;
+
+        $(this).contextmenu(function() {
+            this.href = newLink;
+        });
+    });
+}());
+</script>
+<!-- TODO: check source -->
+<!----------- ОБТЕКАНИЕ ИЗОБРАЖЕНИЯ 2.4.4 ------------->
+<script language="javascript">
+$(function(){
+/***
+$('td#button-link').before('<td id="floatbut" style=\'background-image:url("https://forumstatic.ru/files/0015/dd/40/15488.gif")\'></td>');
+***/
+$('#floatbut, .vibor').click(function(){
+$('div#float').toggle();});
+  });
+elm=document.getElementsByTagName("div")
+for(x in elm) if(elm[x].className=="post-content") 
+{
+post = elm[x].innerHTML;
+if(post.indexOf("[/float]") != -1) {
+floats = /\[float=(.*?)\]([^\[]*)\[\/float\]/gi
+elm[x].innerHTML = elm[x].innerHTML.replace(floats, "<span style='float: $1; margin: 15px; text-align: $1;'>$2</span>")
+}}
+</script>
+<div id="float" style="display:none;background:#dcd3c2;border:1px solid #613a1d; width:auto; padding:8px; position:absolute; margin-top:-20%; margin-left:16%; z-index:20">
+<div><strong>Направление обтекания</strong></div><br>
+<div align="center">
+<img class="vibor" src="https://forumstatic.ru/files/0015/dd/40/52315.png" title="left" onclick="bbcode('', '')" />
+<img class="vibor" src="https://forumstatic.ru/files/0015/dd/40/32241.png" title="right" onclick="bbcode('', '')" />
+</div></div>
+
+
+<!-- TODO: copyright? -->
+ <!--  автоматическое цветовыделение ников по группам -->
+<script language="javascript">
+$(document).ready(function(){
+	$.getJSON('/api.php?method=users.orderedList&limit=50&group_id=1,2&fields=user_id,username,group_id',
+function(json) {
+	var x = json.response.users;
+	for (var i in x) {
+	var v = x[i], s = '("*"):not(.pl-email):not(#navprofile) > a[href$="/profile.php?id='+v.user_id+'"], a[href*="javascript:to(\''+v.username+'\')"]';
+	if (v.group_id == '1') {$(s).css('color', 'maroon')};
+	if (v.group_id == '2') {$(s).css('color', 'navy')};
+}	
+});});
+</script>
+
+<!----- Запрещаем отправку сообщений для гостя без капчи by Leraje ----->
+<div id="captchaWin">
+    <body onload="createCaptcha()">
+        <form id="captchaBlock" onsubmit="validateCaptcha()">
+            <div id="captcha">
+            </div>
+            <input type="text" placeholder="Проверочный код" id="cpatchaTextBox"/>
+            <button type="submit">Отправить</button>
+        </form>
+    </body>
+</div>
+<script src="https://forumstatic.ru/files/0019/d4/16/61617.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<!-- castledoor scripts -->
+<!-- replace some text for #pun-navlinks with fontawesome icons  by Lait. -->
+<script type="text/javascript">
+    (() => {
+        let punIconRemap = {
+            "Форум" :"<i class='fas fa-home' title='Домой'></i>",
+            "Участники": "<i class='fas fa-users' title='Участники'></i>",
+            "Правила": "<i class='fas fa-book' title='Правила'></i>",
+            "Поиск": "<i class='fas fa-search' title='Поиск'></i>",
+            "Регистрация": "<i class='fas fa-user-plus' title='Регистрация'></i>",
+            "Вход": "<i class='fas fa-sign-in-alt' title='Вход'></i>",
+            "Выход": "<i class='fas fa-sign-in-alt' title='Выход'></i>",
+            "Профиль": "<i class='fas fa-user' title='Профиль'></i>",
+            "Сообщения": "<i class='fas fa-comment' title='Сообщения'></i>",
+            "Администрирование": "<i class='fas fa-pen' title='Админка'></i>",
+        };
+        let navigationTexts = document.getElementById("pun-navlinks").getElementsByTagName("a");
+        for (let navElement of navigationTexts) {
+            let actionText = navElement.textContent;
+            if (actionText in punIconRemap) {
+                navElement.innerHTML = punIconRemap[actionText];
+            }
+        }
+        let punIndex = document.getElementById("pun-index");
+        if (punIndex) {
+            let tc2Texts = document.getElementsByClassName("tc2");
+            for (let tc2 of tc2Texts) {
+                tc2.innerHTML = "<i class='fas fa-book'></i> " + tc2.innerHTML;
+            }
+            let tc3Texts = document.getElementsByClassName("tc3");
+            for (let tc3 of tc3Texts) {
+                tc3.innerHTML = "<i class='fas fa-comments'></i> " + tc3.innerHTML;
+            }
+        }
+    })()
+</script>
+
+<div class="copylyl">Фри мега хорош</div></div>

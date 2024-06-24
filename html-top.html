@@ -1,0 +1,94 @@
+<!-- import fontawesome icons -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<div id="html-header">
+    <div id="lylogo"><div class="lyl1">
+            <a href="https://castledoor.rolka.me/">Замок</a>
+            <em>Оказывается, это Re:Борн.</em>
+        </div></div>
+        <header id="hd"></header>
+</div>
+
+<!----------- ВЫДЕЛИТЬ КОД Alex_63 - 2019 ------------->
+<script type="text/javascript" src="https://forumstatic.ru/files/0015/c4/3f/26102.js"></script>
+<script>eval(select_text.toString().replace(/\}$/,'try{document.execCommand("copy")}catch(e){}}'))</script>
+<script type="text/javascript">select_text.linkText = 'скопировать код' //текст ссылки</script>
+
+<!-- html-верх - Cпойлер для cкрытия полей мини-профиля в топиках, (с) ForumD.ru, satsana, 2021 -->
+<script type="text/javascript" src="https://forumstatic.ru/files/0017/b3/fc/83644.js"></script>
+<script type="text/javascript">
+    satMSP.vertical = 1; // вертикальный спойлер (кнопки расположены в столбик, вкладка открывается под кнопкой); по умолчанию кнопки расположены в одну строку над вкладками
+    satMSP.nofold = 1; // не закрывать открытые ранее вкладки при открытии новой; по умолчанию закрываются
+    // satMSP.showtab = 1; // номер отображаемой при загрузке вкладки; по умолчанию все вкладки свёрнуты
+    //  satMSP.showbut = 1; // 1 - показывать все кнопки; по умолчанию копки пустых вкладок не отображаются
+    satMSP.speed = 800; // время сворачивания-разворачивания вкладок в мс (1 секунда = 1000мс), 0 - мгновенно, значение по умолчанию 400.
+    satMSP.fields = [
+        { // Список полей перед спойлером
+            flist: [
+                "pa-author",	// Ник
+                "pa-title",	// Статус
+                "pa-avatar",	// Аватар
+                "pa-posts",	// Сообщений
+                ""] // Конец списка полей перед спойлером
+        },
+        { // Первая вкладка
+            name: "<i class='fas fa-bars' title='Поиск'></i> <u>Инвентарь</u>",
+            img: "",
+            flist: [
+                "pa-fld1",	// Опыт
+                "pa-fld2",	// Золото
+                ""]
+        }, // Конец первой вкладки
+        {} // Конец списка вкладок
+    ];
+</script><!-- Cпойлер cкрытия полей мини-профиля - КОНЕЦ -->
+
+<!-- html-верх - Ролевые маски, (с) ForumD.ru, satsana, 2021 -->
+<script type="text/javascript" src="https://forumstatic.ru/files/0017/b3/fc/40897.js"></script>
+<script type="text/javascript">
+    satRMgroup = [1,2];
+    satRMbb = 1;
+    satRMdquote = 1;
+    satRMflist.push(13); 
+    FORUM.set("editor.mask.after", "#button-image");
+    satRMpre.push({
+        nic: "Дагон",
+        sta: "[b][size=14]NPC[/size][/b]",
+        ava: "https://i.pinimg.com/564x/6a/e3/5f/6ae35f884b48fedb72ea1dbec201456a.jpg",
+    });
+</script>
+<!-- Ролевые маски - КОНЕЦ -->
+
+<!-- Музыка в постах и подписях (c) Emerael, Часть 1 в ХТМЛ-Верх -->
+<script>
+    FORUM.set('editor.music', {
+        name: 'Аудио',
+        audio_url: function() {
+            return prompt("Поместите ссылку на трек", "https://")
+        },
+        audio_title: function() {
+            return prompt("Введите название трека", "Трек")
+        },
+        onclick: function(){
+            const link = FORUM.get('editor.music.audio_url()');
+            if (!link || link === "https://" || $.trim(link) === "") return false;
+
+            const title = FORUM.get('editor.music.audio_title()');
+            document.querySelector("#main-reply").value += `[audio=${link}]${title || 'Песня'}[/audio]`;
+            }})
+</script>
+<!-- Стиль к скрипту "Музыка в постах и подписях" (c) Emerael-->
+<script>td#button-music {
+    background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%221em%22%20height%3D%221em%22%20preserveAspectRatio%3D%22xMidYMid%20meet%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cg%20fill%3D%22currentColor%22%3E%3Cpath%20d%3D%22M6%2013c0%201.105-1.12%202-2.5%202S1%2014.105%201%2013c0-1.104%201.12-2%202.5-2s2.5.896%202.5%202zm9-2c0%201.105-1.12%202-2.5%202s-2.5-.895-2.5-2s1.12-2%202.5-2s2.5.895%202.5%202z%22%2F%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M14%2011V2h1v9h-1zM6%203v10H5V3h1z%22%2F%3E%3Cpath%20d%3D%22M5%202.905a1%201%200%200%201%20.9-.995l8-.8a1%201%200%200%201%201.1.995V3L5%204V2.905z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E') center center no-repeat; /*иконка, замените ссылку если хотите поставить свою*/
+    background-size: 16px; /*размер иконки*/
+}</script>
+
+<!-- Обтекание текста слева/справа -->
+<style type="text/css">
+.post-content p{clear:both}.post-content abbr[title^="float:"]{text-decoration:none;pointer-events:none;margin:.5em}
+.post-content abbr[title="float:left"]{float:left}.post-content abbr[title="float:right"]{float:right}
+</style>
+<script type="text/javascript">
+    FORUM.set('editor.addition.tags.float_left', {name:'Обтекание слева',onclick:function(){bbcode('[abbr="float:left"]','[/abbr]');}});
+    FORUM.set('editor.addition.tags.float_right', {name:'Обтекание справа',onclick:function(){bbcode('[abbr="float:right"]','[/abbr]');}});
+</script>
+
