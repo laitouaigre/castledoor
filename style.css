@@ -49,20 +49,6 @@ summary {display: list-item;}
 template {display: none;}
 [hidden] {display: none;}
 
-/* gruvbox theme pallete */
-:root {
-    --bg: #eff1f5;
-    --fg: #4c4f69;
-    --purple: #8839ef;
-    --aqua: #209fb5;
-    --gray: #8c8fa1;
-    --darkgray: #5c5f77;
-    --black: #000000;
-    --red: #d20f39;
-    --orange: #fe640b;
-    --blue: #1e66f5;
-    --accent: var(--aqua);
-}
 
 /** board */
 html, body {
