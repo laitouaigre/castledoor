@@ -49,44 +49,26 @@ summary {display: list-item;}
 template {display: none;}
 [hidden] {display: none;}
 
-
 /* gruvbox theme pallete */
 :root {
-    --bg2: #282828;
-    --bg: #1d2021;
-    --fg: #a89984;
-    --purple: #b16286;
-    --aqua: #689d68;
-    --gray: #a89984;
-    --darkgray: #1d2021;
+    --bg: #eff1f5;
+    --fg: #4c4f69;
+    --purple: #8839ef;
+    --aqua: #209fb5;
+    --gray: #8c8fa1;
+    --darkgray: #5c5f77;
     --black: #000000;
-    --red: #cc241d;
-    --orange: #d65d0e;
-    --blue: #458588;
-    --accent: var(--blue);
-}
-/* everforest-light-soft theme pallete */
-:root {
-    --bg2: #e5dfc5;
-    --bg: #f3ead3;
-    --fg: #5c6a72;
-    --purple: #df69ba;
-    --aqua: #35a77c;
-    --gray: #829181;
-    --darkgray: #829181;
-    --black: #000000;
-    --red: #f85552;
-    --orange: #f57d26;
-    --blue: #3a94c5;
+    --red: #d20f39;
+    --orange: #fe640b;
+    --blue: #1e66f5;
     --accent: var(--aqua);
 }
 
-
 /** board */
 html, body {
-    background: radial-gradient(ellipse at 50% 10%, var(--bg2) 0%, var(--bg) 75%, var(--bg2) 120%);
+    background-color: var(--bg2);
     color: var(--fg);
-    font-family: "arial";
+    font-family: "CenturyGothic";
     font-size: 16px;
     line-height: 1.5;
 }
@@ -119,7 +101,7 @@ h2 {
 
 
 #pun_wrap {
-    background: none;
+    background: var(--bg);
     color: var(--fg);
     max-width: 1280px;
     display: flex;
@@ -127,6 +109,7 @@ h2 {
     align-items: center;
     margin: 0 auto;
     padding: 10px;
+    border: 1px solid var(--fg);
 
 
 }
@@ -156,8 +139,7 @@ h2 {
     text-decoration: none;
     color: var(--fg);
     font-weight: bold;
-    background: none;
-/*     background-color: var(--bg); */
+    background-color: var(--bg);
     padding: 10px;
     margin-bottom: 10px;
 }
@@ -214,8 +196,6 @@ h2 {
 }
 
 #pun-navlinks {
-    position: sticky;
-    top: 0;
     background-color: var(--bg);
     border: 2px solid var(--fg);
     margin-bottom: 0px;
@@ -237,8 +217,6 @@ h2 {
 }
 
 #pun-ulinks {
-    position: sticky;
-    top: 46px; /* hardcoded value, recalc if sticky elements change */
     margin: 0;
     padding: 10;
     background-color: var(--bg);
@@ -323,7 +301,7 @@ ul.tess li {
 
     padding: 10px;
     margin: 10px;
-    
+
     width: 30%;
 }
 
@@ -451,3 +429,15 @@ ul.tess li {
 }
 
 
+/** non-mobile stuff */
+@media (min-width: 600px) {
+    #pun-navlinks {
+        position: sticky;
+        top: 0;
+    }
+
+    #pun-ulinks {
+        position: sticky;
+        top: 46px; /* hardcoded value, recalc if sticky elements change */
+    }
+}

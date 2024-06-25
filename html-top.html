@@ -8,6 +8,86 @@
         <header id="hd"></header>
 </div>
 
+
+<!-- ПЕРЕКЛЮЧАТЕЛЬ Мини-Стилей на Форум by Deff -->
+<style>#ChangeStyle{position:relative;z-index:100;}#ChangeStyle td{cursor:pointer;width:10px;height:12px;border:1px solid #000;}#ChangeStyle td i{display:none!important}</style>
+<span class="StyleChang"></span>
+<table cellspacing="8" align=right id='ChangeStyle'>
+    <tr>
+        <td bgcolor="#f3ead3" title="Light" >
+            <i>
+            /* catppuccin-latte theme pallete */
+            :root {
+                --bg: #eff1f5;
+                --bg2: #ccd0da;
+                --fg: #4c4f69;
+                --purple: #8839ef;
+                --aqua: #209fb5;
+                --gray: #8c8fa1;
+                --darkgray: #5c5f77;
+                --black: #000000;
+                --red: #d20f39;
+                --orange: #fe640b;
+                --blue: #1e66f5;
+                --accent: var(--aqua);
+            }
+            </i>
+        </td>
+        <td bgcolor="#1d2021" title="Dark">
+            <i>
+                /* catppuccin-frappe theme pallete */
+                :root {
+                --bg: #303446;
+                --bg2: #737994;
+                --fg: #c6d0f5;
+                --purple: #babbf1;
+                --aqua: #99d1db;
+                --gray: #949cbb;
+                --darkgray: #51576d;
+                --black: #000000;
+                --red: #e78284;
+                --orange: #ef9f76;
+                --blue: #8caaee;
+                --accent: var(--blue);
+                }
+            </i>
+
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $('#ChangeStyle td').each(function(i) {
+        $(this).attr("alt", i)
+    });
+    function setcookie(a, b, c) {
+        if (c) {
+            var d = new Date();
+            d.setDate(d.getDate() + c)
+        }
+        if (a && b) document.cookie = a + '=' + b + (c ? '; expires=' + d.toUTCString() : '');
+        else return false
+    }
+    function getcookie(a) {
+        var b = new RegExp(a + '=([^;]){1,}');
+        var c = b.exec(document.cookie);
+        if (c) c = c[0].split('=');
+        else return false;
+        return c[1] ? c[1] : false
+    }
+    function clearSet(L) {
+        if (L) {
+            setcookie("#ChangeStyle", L, 30);
+            $("span.StyleChang").html('<style>' + $("#ChangeStyle td[alt='" + L + "']").find("i").html() + '</style>')
+            }
+            };
+            $('#ChangeStyle td').click(function() {
+            clearSet($(this).attr("alt"))
+            });
+            var Lmem = getcookie("#ChangeStyle");
+            clearSet(Lmem);
+</script>
+
+
 <!----------- ВЫДЕЛИТЬ КОД Alex_63 - 2019 ------------->
 <script type="text/javascript" src="https://forumstatic.ru/files/0015/c4/3f/26102.js"></script>
 <script>eval(select_text.toString().replace(/\}$/,'try{document.execCommand("copy")}catch(e){}}'))</script>
@@ -74,13 +154,15 @@
 
             const title = FORUM.get('editor.music.audio_title()');
             document.querySelector("#main-reply").value += `[audio=${link}]${title || 'Песня'}[/audio]`;
-            }})
+        }})
 </script>
 <!-- Стиль к скрипту "Музыка в постах и подписях" (c) Emerael-->
-<script>td#button-music {
+<style>
+td#button-music {
     background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%221em%22%20height%3D%221em%22%20preserveAspectRatio%3D%22xMidYMid%20meet%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cg%20fill%3D%22currentColor%22%3E%3Cpath%20d%3D%22M6%2013c0%201.105-1.12%202-2.5%202S1%2014.105%201%2013c0-1.104%201.12-2%202.5-2s2.5.896%202.5%202zm9-2c0%201.105-1.12%202-2.5%202s-2.5-.895-2.5-2s1.12-2%202.5-2s2.5.895%202.5%202z%22%2F%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M14%2011V2h1v9h-1zM6%203v10H5V3h1z%22%2F%3E%3Cpath%20d%3D%22M5%202.905a1%201%200%200%201%20.9-.995l8-.8a1%201%200%200%201%201.1.995V3L5%204V2.905z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E') center center no-repeat; /*иконка, замените ссылку если хотите поставить свою*/
     background-size: 16px; /*размер иконки*/
-}</script>
+}
+</style>
 
 <!-- Обтекание текста слева/справа -->
 <style type="text/css">
@@ -91,4 +173,3 @@
     FORUM.set('editor.addition.tags.float_left', {name:'Обтекание слева',onclick:function(){bbcode('[abbr="float:left"]','[/abbr]');}});
     FORUM.set('editor.addition.tags.float_right', {name:'Обтекание справа',onclick:function(){bbcode('[abbr="float:right"]','[/abbr]');}});
 </script>
-
