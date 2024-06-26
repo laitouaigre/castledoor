@@ -1,92 +1,11 @@
 <!-- import fontawesome icons -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <div id="html-header">
-    <div id="lylogo"><div class="lyl1">
-            <a href="https://castledoor.rolka.me/">Замок</a>
-            <em>Оказывается, это Re:Борн.</em>
-        </div></div>
-        <header id="hd"></header>
+    <div id="logo">
+        <a href="https://castledoor.rolka.me/">Замок</a>
+        <em>Оказывается, это Re:Борн.</em>
+    </div>
 </div>
-
-
-<!-- ПЕРЕКЛЮЧАТЕЛЬ Мини-Стилей на Форум by Deff -->
-<style>#ChangeStyle{position:relative;z-index:100;}#ChangeStyle td{cursor:pointer;width:10px;height:12px;border:1px solid #000;}#ChangeStyle td i{display:none!important}</style>
-<span class="StyleChang"></span>
-<table cellspacing="8" align=right id='ChangeStyle'>
-    <tr>
-        <td bgcolor="#f3ead3" title="Light" >
-            <i>
-            /* catppuccin-latte theme pallete */
-            :root {
-                --bg: #eff1f5;
-                --bg2: #ccd0da;
-                --fg: #4c4f69;
-                --purple: #8839ef;
-                --aqua: #209fb5;
-                --gray: #8c8fa1;
-                --darkgray: #5c5f77;
-                --black: #000000;
-                --red: #d20f39;
-                --orange: #fe640b;
-                --blue: #1e66f5;
-                --accent: var(--aqua);
-            }
-            </i>
-        </td>
-        <td bgcolor="#1d2021" title="Dark">
-            <i>
-                /* catppuccin-frappe theme pallete */
-                :root {
-                --bg: #303446;
-                --bg2: #737994;
-                --fg: #c6d0f5;
-                --purple: #babbf1;
-                --aqua: #99d1db;
-                --gray: #949cbb;
-                --darkgray: #51576d;
-                --black: #000000;
-                --red: #e78284;
-                --orange: #ef9f76;
-                --blue: #8caaee;
-                --accent: var(--blue);
-                }
-            </i>
-
-        </td>
-    </tr>
-</table>
-<script type="text/javascript">
-    $('#ChangeStyle td').each(function(i) {
-        $(this).attr("alt", i)
-    });
-    function setcookie(a, b, c) {
-        if (c) {
-            var d = new Date();
-            d.setDate(d.getDate() + c)
-        }
-        if (a && b) document.cookie = a + '=' + b + (c ? '; expires=' + d.toUTCString() : '');
-        else return false
-    }
-    function getcookie(a) {
-        var b = new RegExp(a + '=([^;]){1,}');
-        var c = b.exec(document.cookie);
-        if (c) c = c[0].split('=');
-        else return false;
-        return c[1] ? c[1] : false
-    }
-    function clearSet(L) {
-        if (L) {
-            setcookie("#ChangeStyle", L, 30);
-            $("span.StyleChang").html('<style>' + $("#ChangeStyle td[alt='" + L + "']").find("i").html() + '</style>')
-            }
-            };
-            $('#ChangeStyle td').click(function() {
-            clearSet($(this).attr("alt"))
-            });
-            var Lmem = getcookie("#ChangeStyle");
-            clearSet(Lmem);
-</script>
-
 
 <!----------- ВЫДЕЛИТЬ КОД Alex_63 - 2019 ------------->
 <script type="text/javascript" src="https://forumstatic.ru/files/0015/c4/3f/26102.js"></script>

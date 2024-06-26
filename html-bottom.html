@@ -1,12 +1,92 @@
+
+<!-- ПЕРЕКЛЮЧАТЕЛЬ Мини-Стилей на Форум by Deff -->
+<span class="StyleChang" style="display: none;"></span>
+<table cellspacing="8" align=right id='ChangeStyle'>
+    <tr>
+        <td bgcolor="#eff1f5" title="Light" >
+            <i>
+            /* catppuccin-latte theme pallete */
+            :root {
+                --bg: #eff1f5;
+                --bg2: #ccd0da;
+                --fg: #4c4f69;
+                --purple: #8839ef;
+                --aqua: #209fb5;
+                --gray: #8c8fa1;
+                --darkgray: #5c5f77;
+                --black: #000000;
+                --red: #d20f39;
+                --orange: #fe640b;
+                --blue: #1e66f5;
+                --accent: var(--aqua);
+            }
+            </i>
+        </td>
+        <td bgcolor="#737994" title="Dark">
+            <i>
+                /* catppuccin-frappe theme pallete */
+                :root {
+                --bg: #737994;
+                --bg2: #303446;
+                --fg: #c6d0f5;
+                --purple: #babbf1;
+                --aqua: #99d1db;
+                --gray: #949cbb;
+                --darkgray: #51576d;
+                --black: #000000;
+                --red: #e78284;
+                --orange: #ef9f76;
+                --blue: #8caaee;
+                --accent: var(--blue);
+                }
+            </i>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    $('#ChangeStyle td').each(function(i) {
+        $(this).attr("alt", i)
+    });
+    function setcookie(a, b, c) {
+        if (c) {
+            var d = new Date();
+            d.setDate(d.getDate() + c)
+        }
+        if (a && b) document.cookie = a + '=' + b + (c ? '; expires=' + d.toUTCString() : '');
+        else return false
+    }
+    function getcookie(a) {
+        var b = new RegExp(a + '=([^;]){1,}');
+        var c = b.exec(document.cookie);
+        if (c) c = c[0].split('=');
+        else return false;
+        return c[1] ? c[1] : false
+    }
+    function clearSet(L) {
+        if (L) {
+            setcookie("#ChangeStyle", L, 30);
+            $("span.StyleChang").html('<style>' + $("#ChangeStyle td[alt='" + L + "']").find("i").html() + '</style>')
+            }
+            };
+            $('#ChangeStyle td').click(function() {
+            clearSet($(this).attr("alt"))
+            });
+            var Lmem = getcookie("#ChangeStyle");
+            clearSet(Lmem);
+</script>
+
+
 <!-- TODO: check copyright? -->
 <!---------- ФОРУМНЫЕ СКРИПТЫ ----------->
 <script>
-/*   Свернуть спойлер  */
+/*   Свернуть спойлер 
 function clickSP(i) {setTimeout("$('#spoiler"+i+"').click()",100);}
 $('.quote-box.spoiler-box > div').each(function(i) {
 $(this).attr('id','spoiler'+i).append('<a name="220_'+i+'" style="position:absolute;margin-top:-200px"></a>');
 $(this).next('blockquote').append('<a href="#220_'+i+'" onclick="clickSP('+i+')" style="float:right">Свернуть спойлер</a>');
 });  //Конец скрипта
+*/
 
 /* Восстановление последнего поста при утере by Человек-Шаман */
 $(document).ready(function() {
@@ -140,5 +220,4 @@ function(json) {
         }
     })()
 </script>
-
-<div class="copylyl">Фри мега хорош</div></div>
+<div class="copyright">Фри мега хорош</div></div>
