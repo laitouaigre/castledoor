@@ -47,7 +47,7 @@
                 }
             </i>
         </td>
-        <td bgcolor="#fbf1c7" title="Solarized">
+        <td bgcolor="#839496" title="Solarized">
             <i>
                 /* solarized dark */
                 :root {
@@ -62,6 +62,22 @@
                 }
             </i>
         </td>
+        <td bgcolor="#ffffff" title="Contrast">
+            <i>
+                /* solarized dark */
+                :root {
+                --bg: #ffffff;
+                --bg2: #ffffff;
+                --fg: #000000;
+                --purple: #ff00ff;
+                --black: #000000;
+                --red: #ff0000;
+                --blue: #0000ff;
+                --accent: var(--blue);
+                }
+            </i>
+        </td>
+
 
     </tr>
 </table>
@@ -99,18 +115,8 @@
 </script>
 
 
-<!-- TODO: check copyright? -->
-<!---------- ФОРУМНЫЕ СКРИПТЫ ----------->
+<!-- Восстановление последнего поста при утере by Человек-Шаман -->
 <script>
-/*   Свернуть спойлер 
-function clickSP(i) {setTimeout("$('#spoiler"+i+"').click()",100);}
-$('.quote-box.spoiler-box > div').each(function(i) {
-$(this).attr('id','spoiler'+i).append('<a name="220_'+i+'" style="position:absolute;margin-top:-200px"></a>');
-$(this).next('blockquote').append('<a href="#220_'+i+'" onclick="clickSP('+i+')" style="float:right">Свернуть спойлер</a>');
-});  //Конец скрипта
-*/
-
-/* Восстановление последнего поста при утере by Человек-Шаман */
 $(document).ready(function() {
   $('#addition-area').append(function() {
     return $('<div>Восстановить последний пост</div>').click(restoreLastPost);
@@ -118,9 +124,8 @@ $(document).ready(function() {
   function restoreLastPost() {
     $('#main-reply').val(localStorage.ReservePost);
   };
-}); // Конец
+});
 </script>
-<!-- END ФОРУМНЫЕ СКРИПТЫ-->
 
 <!----- Замена ссылок в Постах на абсолютные by Leraje ----->
 <script type="text/javascript">
@@ -178,33 +183,56 @@ elm[x].innerHTML = elm[x].innerHTML.replace(floats, "<span style='float: $1; mar
 </div></div>
 
 
-<!-- TODO: copyright? -->
- <!--  автоматическое цветовыделение ников по группам -->
-<script language="javascript">
-$(document).ready(function(){
-	$.getJSON('/api.php?method=users.orderedList&limit=50&group_id=1,2&fields=user_id,username,group_id',
-function(json) {
-	var x = json.response.users;
-	for (var i in x) {
-	var v = x[i], s = '("*"):not(.pl-email):not(#navprofile) > a[href$="/profile.php?id='+v.user_id+'"], a[href*="javascript:to(\''+v.username+'\')"]';
-	if (v.group_id == '1') {$(s).css('color', 'maroon')};
-	if (v.group_id == '2') {$(s).css('color', 'navy')};
-}	
-});});
+<!-- Цветовыделение ников по группам by Alex_63-->
+<script type="text/javascript">
+    var groupColors ={
+        //ID группы   //Цвет   //При наведении
+        1 : ['#DA0000','#FF6666'],
+        2 : ['#0000CD','#3366FF'],
+        5 : ['#00C90F','#99CCFF'] //Последний элемент без запятой
+    };
 </script>
-
-<!----- Запрещаем отправку сообщений для гостя без капчи by Leraje ----->
-<div id="captchaWin">
-    <body onload="createCaptcha()">
-        <form id="captchaBlock" onsubmit="validateCaptcha()">
-            <div id="captcha">
-            </div>
-            <input type="text" placeholder="Проверочный код" id="cpatchaTextBox"/>
-            <button type="submit">Отправить</button>
-        </form>
-    </body>
-</div>
-<script src="https://forumstatic.ru/files/0019/d4/16/61617.js"></script>
+<script type="text/javascript">
+    /*****************************************
+    MyBB.ru
+  Цветовыделение ников по группам V.4
+  (С изменением цвета при наведении)
+  Автор: Alex_63     | Версия: V4.1.3
+  Создан: 27.02.2016 | Изменен 31.07.2016
+     *****************************************/
+    (function(){
+        var a0 = Object.keys(groupColors).join(',');
+        function setLnkColors(obj){
+            for(var i in obj){
+                var v = obj[i];
+                var el= '("*"):not(.pl-email):not(#navprofile)>a[href$="/profile.php?id='+v.user_id+'"],.pa-author>a[href*=":to(\''+v.username+'\')"]';
+                for(g0 in groupColors)$(document).find(el).map(function(){var Nick=$(this).html();
+                    if(v.group_id==g0){var s='this.style.color=\'';var SS='<span style="color:'+groupColors[g0][0]+'" onmouseover="'+s+groupColors[g0][1]+'\'"';
+                        SS+=' onmouseout="'+s+groupColors[g0][0]+'\'">'+Nick+'</span>';$(this).html(SS);//alert(SS);
+                    }
+                });
+            }
+        }
+        function getAdmList(){
+            L={method:'users.get',limit:100,group_id:a0,fields:'user_id,username,group_id'};
+            $.post('/api.php',L,function(data){
+                var Obj =data.response.users;
+                setLnkColors(Obj);
+                Obj0 = JSON.stringify(Obj);
+                localStorage.setItem('UsersAdmList',''+RequestTime+'|'+Obj0);
+            },'json');
+        }
+        var LL = localStorage.getItem('UsersAdmList_');
+        if(LL){  //alert('UsersList > '+LL);
+            var LL1 = LL.split('|');
+            var D=RequestTime - (parseInt(LL1[0]));
+            if((1000*D)>24*3600*1000){ getAdmList();return}
+            var LLs = LL1[1];
+            LLs = JSON.parse(LLs);
+            setLnkColors(LLs);
+        } else {getAdmList();}
+    }());
+</script>
 
 <!-- CASTLEDOOR scripts -->
 <!-- replace some text for #pun-navlinks with fontawesome icons  by Lait. -->
@@ -242,4 +270,15 @@ function(json) {
         }
     })()
 </script>
+
+<!-- Фикс к ролевым маскам -->
+<script>
+$('#tags').append(
+'<div class="container" id="mask-area" style="max-width:600px;display:none"><div id="mask-area-sets">' + '<div style="text-align:right"><a href="javascript:satRMchtab()" id="mask-link-pre"' + (satRMpre.length ? '' : ' style="display:none"') + '>Предустановленные маски</a></div>' + '<div id="mask-area-table" style="display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap">' + '<div class="post mask-area-preview" style="margin:0;padding:0;border:none"><ul class="post-author" style="float:none;margin:0"><li class="pa-avatar"><img src="/i/blank.gif" style="display:none"></li></ul></div>' + '<div class="mask-area-fields" style="padding:0 .5em;-webkit-flex-grow:1;flex-grow:1">Имя:<br><input name="nic" type="text" value="" style="width:100%"><br>Статус:<br><input name="sta" type="text" value="" style="width:100%"><br>Аватар:<br><input name="ava" type="text" autocomplete="on" value="" placeholder="Ссылка без тегов" style="width:100%" oninput="satRMtestava($(this))"><br><br><input type="button" class="button" value="Применить маску" onclick="satRMchange(nic.value, sta.value, ava.value, sgn.value)" style="float:right"></div>' + '<div class="mask-area-sign" style="width:100%">Подпись:<br><textarea name="sgn" rows="5"></textarea></div>' + '</div><p class="infofield">Пустые поля не окажут влияния. Если вы хотите, чтобы маска удалила одно из полей, введите пробел. BB-код в полях имени и статуса ' + (
+satRMbb ? 'разрешен' : 'запрещён'
+) + ' в настройках скрипта, он будет ' + (
+satRMbb ? 'обработан' : 'удалён'
+) + ' при выводе маски.</p></div>' + '<div id="mask-area-preset" style="display:none"><div style="text-align:right"><a href="javascript:satRMchtab()" id="mask-link-cancel">Отмена</a></div><div id="mask-area-preset-table" style="max-height:300px;overflow:auto">' + satRMpretable() + '</div></div>' + '</div>'
+)
+</script
 <div class="copyright">Фри мега хорош</div></div>
