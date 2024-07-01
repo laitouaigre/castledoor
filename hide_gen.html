@@ -1,0 +1,170 @@
+<!--Table 2x5 where every cell is an input-->
+<table id="table">
+    <tbody>
+        <tr><td colspan="4"><p>На старте вы имеет 4 очка развития, каждое из которых можете вложить в одну из 4 характеристик.</p></td></tr>
+        <tr>
+            <td>Сила</td>
+            <td>Скорость</td>
+            <td>Выносливость</td>
+            <td>Магия</td>
+        </tr>
+        <!--data-->
+        <tr>
+            <td><input type="number" id="gen_strength"></td>
+            <td><input type="number" id="gen_speed"></td>
+            <td><input type="number" id="gen_endurance"></td>
+            <td><input type="number" id="gen_magic"></td>
+        </tr>
+
+        <tr><td colspan="4"><p>Стартовые навыки задаются предысторией.</p></td></tr>
+        <tr>
+            <td>Внимательность</td>
+            <td>Фехтование</td>
+            <td>Ловкость рук</td>
+            <td>Мистика</td>
+        </tr>
+        <tr>
+            <td><input type="number" id="gen_perception"></td>
+            <td><input type="number" id="gen_fence"></td>
+            <td><input type="number" id="gen_agility"></td>
+            <td><input type="number" id="gen_mistic"></td>
+        </tr>
+    </tbody>
+</table>
+<button id="button">Сгенерировать</button>
+<div class="container post-body post-box post-content code-box" style="max-width: 600px">
+    <strong class="legend">Код:</strong>
+    <div class="blockcode">
+        <div class="scrollbox" style="height: 7.5em">
+            <pre id="output-code"></pre>
+        </div>
+    </div>
+</div>
+<script src="js/hide_gen.js"></script>
+
+
+
+<script>
+    // multiline template variable
+    var template = `
+[quote][align=center][b][size=14][font=Century Gothic]Характеристики[/font][/size][/b][/align]
+[hr]
+
+[table layout=fixed width=100%][tr][td]
+[b][align=center]Сила[/align][/b]
+[/td][td]
+[b][align=center]Скорость[/align][/b]
+[/td][td]
+[b][align=center]Выносливость[/align][/b]
+[/td][td]
+[b][align=center]Магия[/align][/b]
+[/td][td]
+[align=center][b]Всего[/b][/align]
+[/td][/tr][tr][td]
+[align=center]{strength}[/align]
+[/td][td]
+[align=center]{speed}[/align]
+[/td][td]
+[align=center]{endurance}[/align]
+[/td][td]
+[align=center]{magic}[/align]
+[/td][td]
+[align=center]{total}[/align]
+[/td]
+[/tr][/table]
+[/quote]
+
+[quote][align=center][b][size=14][font=Century Gothic]Навыки[/font][/size][/b][/align]
+[hr]
+[table layout=fixed width=100%][tr][td]
+[b][align=center]Восприятие[/align][/b]
+[/td][td]
+[b][align=center]Фехтование[/align][/b]
+[/td][td]
+[b][align=center]Ловкость рук[/align][/b]
+[/td][td]
+[b][align=center]Мистицизм[/align][/b]
+[/td][/tr][tr][td]
+[align=center]{perception}[/align]
+[/td][td]
+[align=center]{fence}[/align]
+[/td][td]
+[align=center]{agility}[/align]
+[/td][td]
+[align=center]{mistic}[/align]
+[/td]
+[/tr][/table]
+[/quote]
+[quote]
+[align=center][b][size=14][font=Century Gothic]Заклинания[/font][/size][/b][/align]
+[hr]
+[media="[font=Century Gothic][b]Выбранный путь магии. Если вы взяли предысторию, дающую навык Мистицизма, вы можете выбрать второй путь магии на старте[/b][/font]"]
+На старте тут указывается только фокус из темы Правил.[/media]
+[/quote]
+
+[quote][align=center][b][size=14][font=Century Gothic]Снаряжение[/font][/size][/b][/align]
+[hr]
+[table layout=fixed width=100%]
+[tr]
+[td][font=Century Gothic][size=14][b][align=center]Голова[/align][/b][/size][/font][hr]
+--
+[/td]
+[td][font=Century Gothic][size=14][b][align=center]Шея[/align][/b][/size][/font][hr]
+--[/td]
+[/tr]
+[tr]
+[td][font=Century Gothic][size=14][b][align=center]Левая рука[/align][/b][/size][/font][hr]
+--[/td]
+[td][font=Century Gothic][size=14][b][align=center]Правая рука[/align][/b][/size][/font][hr]
+--[/td]
+[/tr]
+[tr]
+[td][font=Century Gothic][size=14][b][align=center]Торс[/align][/b][/size][/font][hr]
+--[/td]
+[td][font=Century Gothic][size=14][b][align=center]Обувь[/align][/b][/size][/font][hr]
+--[/td]
+[/tr]
+
+[/table]
+
+[font=Century Gothic][size=14][b][align=center]Оружие[/align][/b][/size][/font][hr]
+
+[font=Century Gothic][size=14][b][align=center]Прочее[/align][/b][/size][/font][hr]
+--
+
+[font=Century Gothic]Набор снаряжения определяется предысторией.[/font]
+[/quote]
+    `;
+    function generate() {
+        // read values from the first input
+        var strength = Number(document.getElementById("gen_strength").value);
+        var speed = Number(document.getElementById("gen_speed").value);
+        var endurance = Number(document.getElementById("gen_endurance").value);
+        var magic = Number(document.getElementById("gen_magic").value);
+
+        var perception = Number(document.getElementById("gen_perception").value);
+        var fence = Number(document.getElementById("gen_fence").value);
+        var agility = Number(document.getElementById("gen_agility").value);
+        var mistic = Number(document.getElementById("gen_mistic").value);
+
+        // check total < 8 and show error on failure
+        if (strength + speed + endurance + magic > 8) {
+            alert("Считать научись, умник, сумма навыков не должна превышать 8.");
+            return "smartass";
+        }
+
+        return template
+            .replace("{strength}", strength)
+            .replace("{speed}", speed)
+            .replace("{endurance}", endurance)
+            .replace("{magic}", magic)
+            .replace("{total}", strength + speed + endurance + magic)
+            .replace("{perception}", perception)
+            .replace("{fence}", fence)
+            .replace("{agility}", agility)
+            .replace("{mistic}", mistic);
+    }
+    document.getElementById("button").addEventListener("click", function() {
+        document.getElementById("output-code").innerHTML = generate();
+    });
+</script>
