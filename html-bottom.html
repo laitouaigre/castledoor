@@ -2,83 +2,62 @@
 <span class="StyleChang" style="display: none;"></span>
 <table cellspacing="8" align=right id='ChangeStyle'>
     <tr>
-        <td bgcolor="#eff1f5" title="Light" >
+        <td bgcolor="#ced1c9" title="Default" >
             <i>
-            /* catppuccin-latte */
             :root {
-                --bg: #eff1f5;
-                --bg2: #ccd0da;
-                --fg: #4c4f69;
-                --purple: #8839ef;
-                --black: #000000;
-                --red: #d20f39;
-                --blue: #1e66f5;
-                --accent: var(--blue);
+            --bg: #0e1110;
+            --board: #ced1c9;
+            --text: #130311;
+            --accent-text: #933f2e;
+            --black: #000000;
+            --otacte: #7c3526;
+            --forms: #c5c1be;
+            --fucking-red: #7c4635;
+            --gray: #aaaba7;
+            --green: #545943;
+            --dark-gray: #2f302c;
+            --darker-gray: #2a272a;
             }
             </i>
         </td>
-        <td bgcolor="#737994" title="Dark">
+        <td bgcolor="#0e1110" title="Consistent" >
             <i>
-                /* catppuccin-frappe */
-                :root {
-                --bg: #737994;
-                --bg2: #303446;
-                --fg: #c6d0f5;
-                --purple: #babbf1;
-                --black: #000000;
-                --red: #e78284;
-                --blue: #8caaee;
-                --accent: var(--blue);
-                }
-            </i>
-        </td>
-        <td bgcolor="#fbf1c7" title="Gruvbox">
-            <i>
-                /* gruvbox light */
-                :root {
-                --bg: #fbf1c7;
-                --bg2: #ebdbb2;
-                --fg: #3c3836;
-                --purple: #b16286;
-                --black: #000000;
-                --red: #cc241d;
-                --blue: #458588;
-                --accent: var(--blue);
-                }
-            </i>
-        </td>
-        <td bgcolor="#839496" title="Solarized">
-            <i>
-                /* solarized dark */
-                :root {
-                --bg: #839496;
-                --bg2: #002b36;
-                --fg: #eee8d5;
-                --purple: #d33682;
-                --black: #000000;
-                --red: #dc322f;
-                --blue: #2aa198;
-                --accent: var(--black);
-                }
-            </i>
-        </td>
-        <td bgcolor="#ffffff" title="Contrast">
-            <i>
-                /* solarized dark */
-                :root {
-                --bg: #ffffff;
-                --bg2: #ffffff;
-                --fg: #000000;
-                --purple: #ff00ff;
-                --black: #000000;
-                --red: #ff0000;
-                --blue: #0000ff;
-                --accent: var(--blue);
-                }
-            </i>
-        </td>
+            :root {
+            --bg: #0e1110;
+            --board: #ced1c9;
+            --text: #130311;
+            --accent-text: #933f2e;
+            --black: #000000;
+            --forms: #c5c1be;
+            --gray: #aaaba7;
+            --green: #545943;
 
+            --dark-gray: board;
+            --darker-gray: gray;
+            --otacte: accent-text;
+            --fucking-red: accent-text;
+            }
+            </i>
+        </td>
+        <td bgcolor="#0e1110" title="Consistent" >
+            <i>
+            :root {
+            --bg: #073642;
+            --board: #586e75;
+            --text: #eee8d5;
+            --accent-text: #cb4b16;
+            --black: #000000;
+            --forms: #93a1a1;
+            --gray: #839496;
+            --green: #859900;
 
+            --dark-gray: board;
+            --darker-gray: gray;
+            --otacte: accent-text;
+            --fucking-red: accent-text;
+            }
+            </i>
+        </td>
     </tr>
 </table>
 
@@ -117,70 +96,72 @@
 
 <!-- Восстановление последнего поста при утере by Человек-Шаман -->
 <script>
-$(document).ready(function() {
-  $('#addition-area').append(function() {
-    return $('<div>Восстановить последний пост</div>').click(restoreLastPost);
-  });
-  function restoreLastPost() {
-    $('#main-reply').val(localStorage.ReservePost);
-  };
-});
+    $(document).ready(function() {
+        $('#addition-area').append(function() {
+            return $('<div>Восстановить последний пост</div>').click(restoreLastPost);
+        });
+        function restoreLastPost() {
+            $('#main-reply').val(localStorage.ReservePost);
+        };
+    });
 </script>
 
 <!----- Замена ссылок в Постах на абсолютные by Leraje ----->
 <script type="text/javascript">
-$(".post-content a").each(function (){
-  var L=$(this).attr("href");var b="click.p";
-  L=L.replace(/^.*click\.php\?(.*)$/mgi,"$1");
-  if(L.search(/viewtopic\.php\?id=.*#p/)!=-1){
-    var p=L.replace(/^.*?#p(\d+)$/mgi,"$1");
-    L=L.replace(/\?id=.*$/,"");
-    L+="?pid="+p+"#p"+p;
-  }
-  $(this).attr("href",L);
-});
+    $(".post-content a").each(function (){
+        var L=$(this).attr("href");var b="click.p";
+        L=L.replace(/^.*click\.php\?(.*)$/mgi,"$1");
+        if(L.search(/viewtopic\.php\?id=.*#p/)!=-1){
+            var p=L.replace(/^.*?#p(\d+)$/mgi,"$1");
+            L=L.replace(/\?id=.*$/,"");
+            L+="?pid="+p+"#p"+p;
+        }
+        $(this).attr("href",L);
+    });
 </script>
 <!-- Абсолютная ссылка по ПКМ копировать адрес ссылки на дату сообщения by Leraje -->
 <script type="text/javascript">
-(function() {
-    $('a.permalink').each(function() {
-        let newLink = $(this).attr('href');
-        let winHttp = document.URL.split(':')[0];
-        let newLinkPtp = winHttp + '://' + location.hostname + '/viewtopic.php?pid=';
-        let a = $(this).parents('.post').attr('id').replace(/^p/i, '');
-        newLink = newLinkPtp + a + '#p' + a;
+    (function() {
+        $('a.permalink').each(function() {
+            let newLink = $(this).attr('href');
+            let winHttp = document.URL.split(':')[0];
+            let newLinkPtp = winHttp + '://' + location.hostname + '/viewtopic.php?pid=';
+            let a = $(this).parents('.post').attr('id').replace(/^p/i, '');
+            newLink = newLinkPtp + a + '#p' + a;
 
-        $(this).contextmenu(function() {
-            this.href = newLink;
+            $(this).contextmenu(function() {
+                this.href = newLink;
+            });
         });
-    });
-}());
+    }());
 </script>
 <!-- TODO: check source -->
 <!----------- ОБТЕКАНИЕ ИЗОБРАЖЕНИЯ 2.4.4 ------------->
 <script language="javascript">
-$(function(){
-/***
+    $(function(){
+        /***
 $('td#button-link').before('<td id="floatbut" style=\'background-image:url("https://forumstatic.ru/files/0015/dd/40/15488.gif")\'></td>');
-***/
-$('#floatbut, .vibor').click(function(){
-$('div#float').toggle();});
-  });
-elm=document.getElementsByTagName("div")
-for(x in elm) if(elm[x].className=="post-content") 
-{
-post = elm[x].innerHTML;
-if(post.indexOf("[/float]") != -1) {
-floats = /\[float=(.*?)\]([^\[]*)\[\/float\]/gi
-elm[x].innerHTML = elm[x].innerHTML.replace(floats, "<span style='float: $1; margin: 15px; text-align: $1;'>$2</span>")
-}}
+         ***/
+        $('#floatbut, .vibor').click(function(){
+            $('div#float').toggle();});
+    });
+    elm=document.getElementsByTagName("div")
+    for(x in elm) if(elm[x].className=="post-content") 
+    {
+        post = elm[x].innerHTML;
+        if(post.indexOf("[/float]") != -1) {
+            floats = /\[float=(.*?)\]([^\[]*)\[\/float\]/gi
+            elm[x].innerHTML = elm[x].innerHTML.replace(floats, "<span style='float: $1; margin: 15px; text-align: $1;'>$2</span>")
+        }}
 </script>
 <div id="float" style="display:none;background:#dcd3c2;border:1px solid #613a1d; width:auto; padding:8px; position:absolute; margin-top:-20%; margin-left:16%; z-index:20">
-<div><strong>Направление обтекания</strong></div><br>
-<div align="center">
-<img class="vibor" src="https://forumstatic.ru/files/0015/dd/40/52315.png" title="left" onclick="bbcode('', '')" />
-<img class="vibor" src="https://forumstatic.ru/files/0015/dd/40/32241.png" title="right" onclick="bbcode('', '')" />
-</div></div>
+    <div><strong>Направление обтекания</strong></div>
+    <br>
+    <div align="center">
+        <img class="vibor" src="https://forumstatic.ru/files/0015/dd/40/52315.png" title="left" onclick="bbcode('', '')" />
+        <img class="vibor" src="https://forumstatic.ru/files/0015/dd/40/32241.png" title="right" onclick="bbcode('', '')" />
+    </div>
+</div>
 
 
 <!-- Цветовыделение ников по группам by Alex_63-->
@@ -273,12 +254,73 @@ elm[x].innerHTML = elm[x].innerHTML.replace(floats, "<span style='float: $1; mar
 
 <!-- Фикс к ролевым маскам -->
 <script>
-$('#tags').append(
+    $('#tags').append(
 '<div class="container" id="mask-area" style="max-width:600px;display:none"><div id="mask-area-sets">' + '<div style="text-align:right"><a href="javascript:satRMchtab()" id="mask-link-pre"' + (satRMpre.length ? '' : ' style="display:none"') + '>Предустановленные маски</a></div>' + '<div id="mask-area-table" style="display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap">' + '<div class="post mask-area-preview" style="margin:0;padding:0;border:none"><ul class="post-author" style="float:none;margin:0"><li class="pa-avatar"><img src="/i/blank.gif" style="display:none"></li></ul></div>' + '<div class="mask-area-fields" style="padding:0 .5em;-webkit-flex-grow:1;flex-grow:1">Имя:<br><input name="nic" type="text" value="" style="width:100%"><br>Статус:<br><input name="sta" type="text" value="" style="width:100%"><br>Аватар:<br><input name="ava" type="text" autocomplete="on" value="" placeholder="Ссылка без тегов" style="width:100%" oninput="satRMtestava($(this))"><br><br><input type="button" class="button" value="Применить маску" onclick="satRMchange(nic.value, sta.value, ava.value, sgn.value)" style="float:right"></div>' + '<div class="mask-area-sign" style="width:100%">Подпись:<br><textarea name="sgn" rows="5"></textarea></div>' + '</div><p class="infofield">Пустые поля не окажут влияния. Если вы хотите, чтобы маска удалила одно из полей, введите пробел. BB-код в полях имени и статуса ' + (
-satRMbb ? 'разрешен' : 'запрещён'
+    satRMbb ? 'разрешен' : 'запрещён'
 ) + ' в настройках скрипта, он будет ' + (
-satRMbb ? 'обработан' : 'удалён'
+    satRMbb ? 'обработан' : 'удалён'
 ) + ' при выводе маски.</p></div>' + '<div id="mask-area-preset" style="display:none"><div style="text-align:right"><a href="javascript:satRMchtab()" id="mask-link-cancel">Отмена</a></div><div id="mask-area-preset-table" style="max-height:300px;overflow:auto">' + satRMpretable() + '</div></div>' + '</div>'
 )
-</script
-<div class="copyright">Фри мега хорош</div></div>
+</script>
+
+<!-- Редактирование дополнительных полей профиля для модераторов by Lait. (c) castledoor -->
+<script type="text/javascript">
+    // insert element under element li with class .pa-avatar
+    function updateFld(userId, fld1, fld2) {
+        // 'https://castletest.rusff.me/profile.php?section=fields&id=' + userId;
+        // "form_sent=1&form%5Bfld1%5D=12&form%5Bfld2%5D=4&update=%CE%F2%EF%F0%E0%E2%E8%F2%FC",
+        fld1 = parseInt(fld1) || 0;
+        fld2 = parseInt(fld2) || 0;
+        let postBody = "form_sent=1&form%5Bfld1%5D=" + fld1 + "&form%5Bfld2%5D=" + fld2 + "&update=%CE%F2%EF%F0%E0%E2%E8%F2%FC";
+        let url = "https://castletest.rusff.me/profile.php?section=fields&id=" + userId;
+        fetch(url, {
+            "credentials": "include",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.5",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Upgrade-Insecure-Requests": "1",
+                "Sec-Fetch-Dest": "document",
+                "Sec-Fetch-Mode": "navigate",
+                "Sec-Fetch-Site": "same-origin",
+                "Sec-Fetch-User": "?1",
+                "Priority": "u=4",
+                "Pragma": "no-cache",
+                "Cache-Control": "no-cache"
+            },
+            "referrer": "https://castletest.rusff.me/profile.php?section=fields&id=2",
+            "body": postBody,
+            "method": "POST",
+            "mode": "cors"
+        });
+    }
+    function insertAfter(newElement, referenceElement) {
+        referenceElement.parentNode.insertBefore(newElement, referenceElement.nextSibling);
+    }
+    function setupInputField(profile, fldClass, fldName) {
+        let newElement = document.createElement("input");
+        newElement.type = "number";
+        newElement.className = "input-"+fldClass;
+        newElement.innerHTML = fldName;
+        insertAfter(newElement, profile.getElementsByClassName(fldClass)[0]);
+        return newElement;
+    }
+    if (GroupID==1 || GroupID==2) {
+        let profileList = document.getElementsByClassName("post");
+        for (const profile of profileList) {
+            let newElement = document.createElement("button");
+            newElement.innerHTML = "Редактировать";
+            setupInputField(profile, "pa-fld1", "Опыт");
+            setupInputField(profile, "pa-fld2", "Золото");
+            newElement.addEventListener("click", async () => {
+                let userId = profile.getElementsByClassName("profile")[0].getElementsByTagName("a")[0].href.split("id=")[1];
+                let fld1 = profile.getElementsByClassName("input-pa-fld1")[0].value;
+                let fld2 = profile.getElementsByClassName("input-pa-fld2")[0].value;
+                updateFld(2, fld1, fld2);
+            });
+            insertAfter(newElement, profile.getElementsByClassName("input-pa-fld2")[0]);
+        }
+    }
+</script>
+<div class="copyright">Фри мега хорош</div>

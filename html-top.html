@@ -18,7 +18,7 @@
     satMSP.vertical = 1; // вертикальный спойлер (кнопки расположены в столбик, вкладка открывается под кнопкой); по умолчанию кнопки расположены в одну строку над вкладками
     satMSP.nofold = 1; // не закрывать открытые ранее вкладки при открытии новой; по умолчанию закрываются
     // satMSP.showtab = 1; // номер отображаемой при загрузке вкладки; по умолчанию все вкладки свёрнуты
-    //  satMSP.showbut = 1; // 1 - показывать все кнопки; по умолчанию копки пустых вкладок не отображаются
+    satMSP.showbut = 1; // 1 - показывать все кнопки; по умолчанию копки пустых вкладок не отображаются
     satMSP.speed = 800; // время сворачивания-разворачивания вкладок в мс (1 секунда = 1000мс), 0 - мгновенно, значение по умолчанию 400.
     satMSP.fields = [
         { // Список полей перед спойлером
@@ -90,4 +90,14 @@ td#button-music {
 <script type="text/javascript">
     FORUM.set('editor.addition.tags.float_left', {name:'Обтекание слева',onclick:function(){bbcode('[abbr="float:left"]','[/abbr]');}});
     FORUM.set('editor.addition.tags.float_right', {name:'Обтекание справа',onclick:function(){bbcode('[abbr="float:right"]','[/abbr]');}});
+</script>
+
+
+<!-- CASTLEDOOR scripts -->
+<script>
+    var mybbApi= new MybbSDK("https://castletest.rusff.me/", {
+        format: "json",
+        charset: "utf-8"
+    });
+    mybbApi.setToken(ForumAPITicket);
 </script>
