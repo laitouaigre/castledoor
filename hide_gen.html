@@ -1,33 +1,64 @@
 <!--Table 2x5 where every cell is an input-->
+<style>
+input {
+    box-sizing:border-box;
+    width: 100%;
+}
+</style>
 <table id="table">
     <tbody>
-        <tr><td colspan="4"><p>На старте вы имеет 4 очка развития, каждое из которых можете вложить в одну из 4 характеристик.</p></td></tr>
+        <tr><td colspan="5"><p>На старте вы имеет 4 очка развития, каждое из которых можете вложить в одну из 4 характеристик.</p></td></tr>
         <tr>
             <td>Сила</td>
             <td>Скорость</td>
             <td>Выносливость</td>
             <td>Магия</td>
+            <td>Всего</td>
         </tr>
         <!--data-->
         <tr>
-            <td><input type="number" id="gen_strength"></td>
-            <td><input type="number" id="gen_speed"></td>
-            <td><input type="number" id="gen_endurance"></td>
-            <td><input type="number" id="gen_magic"></td>
+            <td><input type="number" id="gen_strength" onKeyDown="return false" min="1" value="1"/></td>
+            <td><input type="number" id="gen_speed" onKeyDown="return false" min="1" value="1"/></td>
+            <td><input type="number" id="gen_endurance" onKeyDown="return false" min="1" value="1"/></td>
+            <td><input type="number" id="gen_magic" onKeyDown="return false" min="1" value="1"/></td>
+            <td><input type="number" id="gen_total" disabled/ value="4"></td>
+        </tr>
+        <tr><td colspan="5"><p>Стартовые навыки задаются предысторией.</p></td></tr>
+        <tr>
+            <td colspan="5">
+                <select id="gen_history">
+                    <option value="---" selected>---</option>
+                    <option value="criminal">Преступник</option>
+                    <option value="soldier">Солдат</option>
+                    <option value="volenteer">Доброволец</option>
+                    <option value="servant">Слуга</option>
+                    <option value="delegate">Делегат</option>
+                </select>
+            </td>
         </tr>
 
-        <tr><td colspan="4"><p>Стартовые навыки задаются предысторией.</p></td></tr>
         <tr>
-            <td>Внимательность</td>
-            <td>Фехтование</td>
-            <td>Ловкость рук</td>
-            <td>Мистика</td>
+            <td colspan="5"><p>Навыки:</p></td>
         </tr>
         <tr>
-            <td><input type="number" id="gen_perception"></td>
-            <td><input type="number" id="gen_fence"></td>
-            <td><input type="number" id="gen_agility"></td>
-            <td><input type="number" id="gen_mistic"></td>
+            <td>
+                <select id="gen_skill_1">
+                    <option value="---" selected>---</option>
+                    <option value="perception" disabled>Восприятие</option>
+                    <option value="fence" disabled>Фехтование</option>
+                    <option value="agility" disabled>Ловкость рук</option>
+                    <option value="mistic" disabled>Мистицизм</option>
+                </select>
+            </td>
+            <td>
+                <select id="gen_skill_2">
+                    <option value="---" selected>---</option>
+                    <option value="perception" disabled>Восприятие</option>
+                    <option value="fence" disabled>Фехтование</option>
+                    <option value="agility" disabled>Ловкость рук</option>
+                    <option value="mistic" disabled>Мистицизм</option>
+                </select>
+            </td>
         </tr>
     </tbody>
 </table>
@@ -40,11 +71,82 @@
         </div>
     </div>
 </div>
-<script src="js/hide_gen.js"></script>
+
+<!-- Упралвение элементами формы by Lait. -->
+<script type="text/javascript">
+    // Choose skills based on history
+    var historyToSkills = {
+        'criminal': [
+            ['perception'],
+            ['agility', 'fence'],
+        ],
+        soldier: [
+            ['perception', 'mistic'],
+            ['agility', 'fence'],
+        ],
+        volenteer: [
+            ['mistic'],
+            ['agility', 'perception'],
+        ],
+        servant: [
+            ['perception', 'mistic', 'fence', 'agility'],
+            ['perception', 'mistic', 'fence', 'agility'],
+        ],
+        delegate: [
+            ['perception'],
+            ['agility', 'mistic'],
+        ],
+    };
+    // check chosen history and set available skills
+    function updateAvailableSkills() {
+        function updateOptions(selectId, optionsList, allOptions) {
+            for (var opt of allOptions) {
+                $(`#${selectId} option[value=${opt}]`).prop('disabled', true);
+            }
+            for (var opt of optionsList) {
+                $(`#${selectId} option[value=${opt}]`).prop('disabled', false);
+            }
+            $(`#${selectId} option[value=${optionsList[0]}]`).prop('selected', true);
+        }
+        var hist = document.getElementById("gen_history").value;
+        var optionsFirst = historyToSkills[hist][0];
+        var optionsSecond = historyToSkills[hist][1];
+        var allOptions = ['perception', 'mistic', 'fence', 'agility'];
+
+        updateOptions("gen_skill_1", optionsFirst, allOptions);
+        updateOptions("gen_skill_2", optionsSecond, allOptions);
+    }
+
+    document.getElementById("gen_history").addEventListener("change", updateAvailableSkills);
 
 
+    /******************************************
+    *******************************************
+    */
+    // change total color if exceeds max value
+    function updateTotalColor() {
+        var strength = Number($("#gen_strength").val());
+        var speed = Number($("#gen_speed").val());
+        var endurance = Number($("#gen_endurance").val());
+        var magic = Number($("#gen_magic").val());
+        var total = strength + speed + endurance + magic;
+        $("#gen_total").val(total);
+        $("#gen_total").css({"color": "black"});
+        if (total > 8) {
+            $("#gen_total").css({"color": "red"});
+        }
+    }
+    document.getElementById("gen_strength").addEventListener("change", updateTotalColor);
+    document.getElementById("gen_speed").addEventListener("change", updateTotalColor);
+    document.getElementById("gen_endurance").addEventListener("change", updateTotalColor);
+    document.getElementById("gen_magic").addEventListener("change", updateTotalColor);
 
-<script>
+
+</script>
+
+
+<!-- Генерация шаблона "После принятия" by Lait. -->
+<script type="text/javascript">
     // multiline template variable
     var template = `
 [quote][align=center][b][size=14][font=Century Gothic]Характеристики[/font][/size][/b][/align]
@@ -135,36 +237,80 @@
 [font=Century Gothic]Набор снаряжения определяется предысторией.[/font]
 [/quote]
     `;
-    function generate() {
-        // read values from the first input
-        var strength = Number(document.getElementById("gen_strength").value);
-        var speed = Number(document.getElementById("gen_speed").value);
-        var endurance = Number(document.getElementById("gen_endurance").value);
-        var magic = Number(document.getElementById("gen_magic").value);
-
-        var perception = Number(document.getElementById("gen_perception").value);
-        var fence = Number(document.getElementById("gen_fence").value);
-        var agility = Number(document.getElementById("gen_agility").value);
-        var mistic = Number(document.getElementById("gen_mistic").value);
-
-        // check total < 8 and show error on failure
-        if (strength + speed + endurance + magic > 8) {
-            alert("Считать научись, умник, сумма навыков не должна превышать 8.");
-            return "smartass";
+    class Character {
+        constructor(strength, speed, endurance, magic,
+            perception, fence, agility, mistic) {
+            this.strength = strength;
+            this.speed = speed;
+            this.endurance = endurance;
+            this.magic = magic;
+            this.perception = perception;
+            this.fence = fence;
+            this.agility = agility;
+            this.mistic = mistic;
         }
+    };
+    function parseStats() {
+        // read values from the first input
+        function parseProgress(id) {
+            return Number($("#" + id).val());
+        }
+        var strength = parseProgress("gen_strength");
+        var speed = parseProgress("gen_speed");
+        var endurance = parseProgress("gen_endurance");
+        var magic = parseProgress("gen_magic");
 
+        function parseSkill(name) {
+            var skill = $("#gen_skill_1").val() == name ? 1 : 0;
+            skill += $("#gen_skill_2").val() == name ? 1 : 0;
+            return skill;
+        }
+        var perception = parseSkill("perception");
+        var fence = parseSkill("fence");
+        var agility = parseSkill("agility");
+        var mistic = parseSkill("mistic");
+        return new Character(strength, speed, endurance, magic, perception, fence, agility, mistic);
+    }
+    /**
+     * ch: Character
+    */
+    function validateCharacter(ch) {
+        if (ch.strength + ch.speed + ch.endurance + ch.magic > 8) {
+            error = "Считать научись, умник, сумма навыков не должна превышать 8.";
+            return error;
+        }
+        var sum = ch.perception + ch.fence + ch.agility + ch.mistic;
+        var fields = [ch.perception, ch.fence, ch.agility, ch.mistic];
+        if (sum != 2 || fields.filter(f => f == 1).length != 2) {
+            error = "Только два навыка могут быть одинаковыми.";
+            return error;
+        }
+        return null;
+    }
+    /**
+     * template: String
+     * ch: Character
+    */
+    function prepareTemplate(template, ch) {
         return template
-            .replace("{strength}", strength)
-            .replace("{speed}", speed)
-            .replace("{endurance}", endurance)
-            .replace("{magic}", magic)
-            .replace("{total}", strength + speed + endurance + magic)
-            .replace("{perception}", perception)
-            .replace("{fence}", fence)
-            .replace("{agility}", agility)
-            .replace("{mistic}", mistic);
+            .replace("{strength}", ch.strength)
+            .replace("{speed}", ch.speed)
+            .replace("{endurance}", ch.endurance)
+            .replace("{magic}", ch.magic)
+            .replace("{total}", ch.strength + ch.speed + ch.endurance + ch.magic)
+            .replace("{perception}", ch.perception)
+            .replace("{fence}", ch.fence)
+            .replace("{agility}", ch.agility)
+            .replace("{mistic}", ch.mistic);
     }
     document.getElementById("button").addEventListener("click", function() {
-        document.getElementById("output-code").innerHTML = generate();
+        var ch = parseStats();
+        var valid, error = validateCharacter(ch);
+        if (error) {
+            document.getElementById("output-code").innerHTML = error;
+            alert(error);
+            return;
+        }
+        document.getElementById("output-code").innerHTML = prepareTemplate(template, ch);
     });
 </script>
