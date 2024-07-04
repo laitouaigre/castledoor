@@ -1,99 +1,3 @@
-<!-- ПЕРЕКЛЮЧАТЕЛЬ Мини-Стилей на Форум by Deff -->
-<span class="StyleChang" style="display: none;"></span>
-<table cellspacing="8" align=right id='ChangeStyle'>
-    <tr>
-        <td bgcolor="#ced1c9" title="Default" >
-            <i>
-            :root {
-            --bg: #0e1110;
-            --board: #ced1c9;
-            --text: #130311;
-            --accent-text: #933f2e;
-            --black: #000000;
-            --otacte: #7c3526;
-            --forms: #c5c1be;
-            --fucking-red: #7c4635;
-            --gray: #aaaba7;
-            --green: #545943;
-            --dark-gray: #2f302c;
-            --darker-gray: #2a272a;
-            }
-            </i>
-        </td>
-        <td bgcolor="#0e1110" title="Consistent" >
-            <i>
-            :root {
-            --bg: #0e1110;
-            --board: #ced1c9;
-            --text: #130311;
-            --accent-text: #933f2e;
-            --black: #000000;
-            --forms: #c5c1be;
-            --gray: #aaaba7;
-            --green: #545943;
-
-            --dark-gray: board;
-            --darker-gray: gray;
-            --otacte: accent-text;
-            --fucking-red: accent-text;
-            }
-            </i>
-        </td>
-        <td bgcolor="#0e1110" title="Consistent" >
-            <i>
-            :root {
-            --bg: #073642;
-            --board: #586e75;
-            --text: #eee8d5;
-            --accent-text: #cb4b16;
-            --black: #000000;
-            --forms: #93a1a1;
-            --gray: #839496;
-            --green: #859900;
-
-            --dark-gray: board;
-            --darker-gray: gray;
-            --otacte: accent-text;
-            --fucking-red: accent-text;
-            }
-            </i>
-        </td>
-    </tr>
-</table>
-
-<script type="text/javascript">
-    $('#ChangeStyle td').each(function(i) {
-        $(this).attr("alt", i)
-    });
-    function setcookie(a, b, c) {
-        if (c) {
-            var d = new Date();
-            d.setDate(d.getDate() + c)
-        }
-        if (a && b) document.cookie = a + '=' + b + (c ? '; expires=' + d.toUTCString() : '');
-        else return false
-    }
-    function getcookie(a) {
-        var b = new RegExp(a + '=([^;]){1,}');
-        var c = b.exec(document.cookie);
-        if (c) c = c[0].split('=');
-        else return false;
-        return c[1] ? c[1] : false
-    }
-    function clearSet(L) {
-        if (L) {
-            setcookie("#ChangeStyle", L, 30);
-            $("span.StyleChang").html('<style>' + $("#ChangeStyle td[alt='" + L + "']").find("i").html() + '</style>')
-            }
-            };
-            $('#ChangeStyle td').click(function() {
-            clearSet($(this).attr("alt"))
-            });
-            var Lmem = getcookie("#ChangeStyle");
-            clearSet(Lmem);
-</script>
-
-
 <!-- Восстановление последнего поста при утере by Человек-Шаман -->
 <script>
     $(document).ready(function() {
@@ -216,41 +120,6 @@ $('td#button-link').before('<td id="floatbut" style=\'background-image:url("http
 </script>
 
 <!-- CASTLEDOOR scripts -->
-<!-- replace some text for #pun-navlinks with fontawesome icons  by Lait. -->
-<script type="text/javascript">
-    (() => {
-        let punIconRemap = {
-            "Форум" :"<i class='fas fa-home' title='Домой'></i>",
-            "Участники": "<i class='fas fa-users' title='Участники'></i>",
-            "Правила": "<i class='fas fa-book' title='Правила'></i>",
-            "Поиск": "<i class='fas fa-search' title='Поиск'></i>",
-            "Регистрация": "<i class='fas fa-user-plus' title='Регистрация'></i>",
-            "Войти": "<i class='fas fa-sign-in-alt' title='Войти'></i>",
-            "Выход": "<i class='fas fa-sign-in-alt' title='Выход'></i>",
-            "Профиль": "<i class='fas fa-user' title='Профиль'></i>",
-            "Сообщения": "<i class='fas fa-comment' title='Сообщения'></i>",
-            "Администрирование": "<i class='fas fa-pen' title='Админка'></i>",
-        };
-        let navigationTexts = document.getElementById("pun-navlinks").getElementsByTagName("a");
-        for (let navElement of navigationTexts) {
-            let actionText = navElement.textContent;
-            if (actionText in punIconRemap) {
-                navElement.innerHTML = punIconRemap[actionText];
-            }
-        }
-        let punIndex = document.getElementById("pun-index");
-        if (punIndex) {
-            let tc2Texts = document.getElementsByClassName("tc2");
-            for (let tc2 of tc2Texts) {
-                tc2.innerHTML = "<i class='fas fa-book'></i> " + tc2.innerHTML;
-            }
-            let tc3Texts = document.getElementsByClassName("tc3");
-            for (let tc3 of tc3Texts) {
-                tc3.innerHTML = "<i class='fas fa-comments'></i> " + tc3.innerHTML;
-            }
-        }
-    })()
-</script>
 
 <!-- Фикс к ролевым маскам -->
 <script>
@@ -322,5 +191,16 @@ $('td#button-link').before('<td id="floatbut" style=\'background-image:url("http
             insertAfter(newElement, profile.getElementsByClassName("input-pa-fld2")[0]);
         }
     }
+</script>
+
+<!-- Автозаполнение названия темы при препросмотре by Lait. -->
+<script type="text/javascript">
+    document.getElementsByClassName("button preview")[0].addEventListener("click", function() {
+        var topicEl = $("#post-form").find("input[name=req_subject]");
+        var currentTopic = topicEl.val();
+        if (!currentTopic) {
+            topicEl.val("ПРЕДПРОСМОТР");
+        }
+    });
 </script>
 <div class="copyright">Фри мега хорош</div>
