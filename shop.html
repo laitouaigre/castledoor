@@ -1,0 +1,165 @@
+<!-- Form for a forum roleplay shop -->
+
+
+<!-- Table with tabs that can be switched on click -->
+<style>
+.tab {
+    display: none;
+}
+    .active {
+        display: block;
+    }
+</style>
+<table>
+    <thead>
+        <tr>
+            <td>
+                <button onclick="switchTab('tab1')">Таб 1</button>
+            </td>
+            <td>
+                <button onclick="switchTab('tab2')">Таб 2</button>
+            </td>
+            <td>
+                <button onclick="switchTab('tab3')">Таб 3</button>
+            </td>
+        </tr>
+    </thead>
+</table>
+
+<div class="tabs">
+    <div class="tab active" id="tab1"></div>
+    <div class="tab" id="tab2"></div>
+    <div class="tab" id="tab3"></div>
+</div>
+
+<button id="buy-btn" onclick="buy()">Купить</button>
+
+<div class="container post-body post-box post-content code-box" style="max-width: 600px">
+    <strong class="legend">Код:</strong>
+    <div class="blockcode">
+        <div class="scrollbox" style="height: 7.5em">
+            <pre id="output-code"></pre>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const shopFileName = "https://forumstatic.ru/files/001c/30/b4/58182.txt";
+    class Item {
+        constructor(name, price, amount, currency) {
+            this.name = name;
+            this.price = price;
+            this.amount = amount;
+            this.currency = currency;
+        }
+    }
+
+    function shopToHtml(data) {
+        // find line of the first-level header
+        var startTabOne = data.indexOf("# 1");
+        var startTabTwo = data.indexOf("# 2");
+        var startTabThree = data.indexOf("# 3");
+
+        // items are between start line 1 and start line 2
+        var headerOffset = "# 1\n".length + 1;
+        var tabOne = data.substring(startTabOne + headerOffset, startTabTwo);
+        var tabTwo = data.substring(startTabTwo + headerOffset, startTabThree);
+        var tabThree = data.substring(startTabThree + headerOffset);
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+        }
+
+        function htmlfyTab(tab) {
+            // items are splitted by empty lines
+            var items = tab.split("\r\n\r\n");
+            items = items.filter(function (item) {
+                return item.length > 0;
+            });
+            console.log(items);
+            var output = "<table><tr>";
+            for (var i = 0; i < items.length; i++) {
+                var rows = items[i].split("\r\n");
+                rows.forEach(function (row) {
+                    row = row.trim();
+                    row = escapeHtml(row);
+                });
+                console.log(rows);
+                var name = rows[0];
+                var image = rows[1];
+                var price = rows[2];
+                output += "<td><div class='item'>";
+                output += `<p class="name">${name}</p>`;
+                output += `<img src="${image}"/>`;
+                output += `<p class="price">Цена: ${price}</p>`;
+                output += "<p>Количество:</p><input class='amount' type='number'/>";
+                output += "</div></td>";
+                if (i % 3 == 2) {
+                    output += "</tr><tr>";
+                }
+            }
+            output += "</tr></table>";
+            return output;
+        }
+        $("#tab1").html(htmlfyTab(tabOne));
+        $("#tab2").html(htmlfyTab(tabTwo));
+        $("#tab3").html(htmlfyTab(tabThree));
+    }
+
+    function fillShop() {
+        $.ajax({
+            url: shopFileName,
+            success: function (data) {
+                shopToHtml(data);
+            }
+        });
+    }
+
+    function switchTab(id) {
+        var tab1 = document.getElementById("tab1");
+        var tab2 = document.getElementById("tab2");
+        var tab3 = document.getElementById("tab3");
+        tab1.classList.remove("active");
+        tab2.classList.remove("active");
+        tab3.classList.remove("active");
+        document.getElementById(id).classList.add("active");
+    }
+    function parseItem(item) {
+        var name = item.getElementsByClassName("name")[0].innerHTML;
+        var priceString = item.getElementsByClassName("price")[0].innerHTML;
+        var price = Number(priceString.split(" ")[1]);
+        var currency = priceString.split(" ")[2];
+        var amount = Number(item.getElementsByClassName("amount")[0].value);
+        return new Item(name, price, amount, currency);
+
+    }
+    function buy() {
+        // parse all input in all tabs
+        var items = $(".item");
+        var output = "";
+        var totalGold = 0;
+        var totalExp = 0;
+        for (var i = 0; i < items.length; i++) {
+            var item = parseItem(items[i]);
+            if (item.amount > 0) {
+                output += `${item.name} ${item.amount} шт. (${item.price * item.amount} ${item.currency})\n`;
+                if (item.currency == "золота") {
+                    totalGold += item.price * item.amount;
+                } else if (item.currency == "опыта") {
+                    totalExp += item.price * item.amount;
+                }
+            }
+        }
+        output += `Всего:\n${totalGold} золота\n${totalExp} опыта`;
+        $("#output-code").html(output);
+    }
+    fillShop();
+</script>
+
+
+
