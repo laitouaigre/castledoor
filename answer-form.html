@@ -6,8 +6,10 @@
         max-width: 200px;
     }
 </style>
-<input class="spell" type="checkbox" id="spell-check" style="display:none"/>
-<label for="spell-check">Редактор заклинаний</label>
+<div id="spell-btn" style="display:none">
+    <input class="spell" type="checkbox" id="spell-check" />
+    <label for="spell-check">Редактор заклинаний</label>
+</div>
 <table id="spell-table" hidden>
     <tr>
         <td><b>Название</b></td>
@@ -93,8 +95,8 @@
 <script type="text/javascript">
 
     function setupSpellButton() {
+        $("#spell-btn").css({"display":""});
         var spellCheckbox = document.getElementById("spell-check");
-        $("#spell-check").css({"display":""});
         spellCheckbox.addEventListener('change', function() {
             $("#spell-table").attr("hidden", !this.checked);
         });
@@ -147,7 +149,7 @@
     }
 
 
-    const SPELLFORUMID = 3;
+    const SPELLFORUMID = 2;
     if (FORUM.get("topic") && FORUM.get("topic").forum_id == SPELLFORUMID) {
         setupSpellButton();
     }
