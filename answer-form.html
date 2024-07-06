@@ -1,0 +1,155 @@
+<!-- CASTLEDOOR scripts -->
+
+<!-- Редактор заклинаний by Lait. -->
+<style>
+    input.spell {
+        max-width: 200px;
+    }
+</style>
+<input class="spell" type="checkbox" id="spell-check" style="display:none"/>
+<label for="spell-check">Редактор заклинаний</label>
+<table id="spell-table" hidden>
+    <tr>
+        <td><b>Название</b></td>
+        <td><input class="spell" type="text" id="spell-name"></td>
+    </tr>
+    <tr>
+        <td><i>Круг</i></td>
+        <td>
+            <select id="spell-circle">
+                <option value="Фокус" selected>Фокус</option>
+                <option value="I">I</option>
+                <option value="II">II</option>
+                <option value="III">III</option>
+                <option value="IV">IV</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <!-- подсказка для путей магии-->
+        <td><b title="пламя, гроза, дождь, мороз, цветение, камень, руда,  ветер, звук, жизнь, душа"><u>Путь магии</u></b></td> 
+        <td><input class="spell" title="пламя, гроза, дождь, мороз, цветение, камень, руда,  ветер, звук, жизнь, душа" type="text" id="spell-path"/></td>
+    </tr>
+    <tr>
+        <td><b>Базовый урон</b></td>
+        <td>
+            <select id="spell-damage">
+                <option value="---" selected>---</option>
+                <option value="Незначительный">Незначительный</option>
+                <option value="Малый">Малый</option>
+                <option value="Средний">Средний</option>
+                <option value="Серьёзный">Серьёзный</option>
+                <option value="Смертельный">Смертельный</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><b>Дистанция</b></td>
+        <td><input class="spell" type="number" id="spell-distance"></td>
+    </tr>
+    <tr>
+        <td><b>Время накладывания</b></td>
+        <td>
+            <select id="spell-duration">
+                <option value="---" selected>---</option>
+                <option value="Мгновенно">Мгновенно</option>
+                <option value="1 ход">1 ход</option>
+                <option value="2 хода">2 хода</option>
+                <option value="3 хода">3 хода</option>
+                <option value="4 хода">4 хода</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><b>Длительность</b></td>
+        <td>
+            <select id="spell-length">
+                <option value="---" selected>---</option>
+                <option value="Нет">Нет</option>
+                <option value="1 ход">1 ход</option>
+                <option value="2 хода">2 хода</option>
+                <option value="3 хода">3 хода</option>
+                <option value="4 хода">4 хода</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><b>Затраты</b></td>
+        <td><input class="spell" type="number" id="spell-cost"></td>
+    </tr>
+    <tr>
+        <td colspan=2>
+            <b>Описание</b>
+            <textarea id="spell-description" style="width: 100%"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td><div id="create-spell" style="border: 1px solid black; background-color: white" style="cursor:pointer;" onclick="createSpell()">Создать</div></td>
+        <td><div id="clear-spell" style="border: 1px solid black; background-color: white" style="cursor:pointer;" onclick="clearSpell()">Очистить</div></td>
+
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+    function setupSpellButton() {
+        var spellCheckbox = document.getElementById("spell-check");
+        $("#spell-check").css({"display":""});
+        spellCheckbox.addEventListener('change', function() {
+            $("#spell-table").attr("hidden", !this.checked);
+        });
+        if (spellCheckbox.checked) {
+            $("#spell-table").attr("hidden", false);
+        }
+    }
+
+    function createSpell() {
+        // get all values using jquerry
+        const template =`[b][align=center]Заявка на создание заклинания[/align][/b]
+[b]{title}[/b] [i]{circle}[/i]
+[i]{path}[/i]
+Базовый урон: {damage}
+Дистанция: {distance} метров
+Время накладывания: {time}
+Длительность: {duration}
+Затраты: {cost}
+{description}`
+        var spellBuilder = "[b][align=center]Заявка на создание заклинания[/align][/b]\n";
+        spellBuilder += `[b]${$("#spell-name").val()}[/b] [i]${$("#spell-circle").val()}[/i]\n`;
+        spellBuilder += `[i]${$("#spell-path").val()}[/i]\n`;
+        if ($("#spell-damage").val() != "") {
+            spellBuilder += `Базовый урон: ${$("#spell-damage").val()}\n`;
+        }
+        if ($("#spell-distance").val() != "") {
+            spellBuilder += `Дистанция: ${$("#spell-distance").val()} метров\n`;
+        }
+        if ($("#spell-duration").val() != "---") {
+            spellBuilder += `Время накладывания: ${$("#spell-duration").val()}\n`;
+        }
+        if ($("#spell-length").val() != "---") {
+            spellBuilder += `Длительность: ${$("#spell-length").val()}\n`;
+        }
+        spellBuilder += `Затраты: ${$("#spell-cost").val()}\n`;
+        spellBuilder += `${$("#spell-description").val()}`;
+        document.getElementById("main-reply").value += "\n" + spellBuilder;
+    }
+
+    function clearSpell() {
+        $("#spell-name").val("");
+        $("#spell-circle").val("---");
+        $("#spell-path").val("");
+        $("#spell-damage").val("");
+        $("#spell-distance").val("");
+        $("#spell-duration").val("---");
+        $("#spell-length").val("---");
+        $("#spell-cost").val("");
+        $("#spell-description").val("");
+    }
+
+
+    const SPELLFORUMID = 3;
+    if (FORUM.get("topic") && FORUM.get("topic").forum_id == SPELLFORUMID) {
+        setupSpellButton();
+    }
+    
+</script>
