@@ -5,7 +5,14 @@
     input.spell {
         max-width: 200px;
     }
+    .additional-btn {
+        border: 1px solid black;
+        cursor:pointer;
+        background-color: white;
+    }
 </style>
+
+<!-- Редактор заклинаний -->
 <div id="spell-btn" style="display:none">
     <input class="spell" type="checkbox" id="spell-check" />
     <label for="spell-check">Редактор заклинаний</label>
@@ -86,14 +93,12 @@
         </td>
     </tr>
     <tr>
-        <td><div id="create-spell" style="border: 1px solid black; background-color: white" style="cursor:pointer;" onclick="createSpell()">Создать</div></td>
-        <td><div id="clear-spell" style="border: 1px solid black; background-color: white" style="cursor:pointer;" onclick="clearSpell()">Очистить</div></td>
-
+        <td><div id="create-spell" class="additional-btn" onclick="createSpell()">Создать</div></td>
+        <td><div id="clear-spell" class="additional-btn" onclick="clearSpell()">Очистить</div></td>
     </tr>
 </table>
 
 <script type="text/javascript">
-
     function setupSpellButton() {
         $("#spell-btn").css({"display":""});
         var spellCheckbox = document.getElementById("spell-check");
@@ -148,10 +153,66 @@
         $("#spell-description").val("");
     }
 
-
     const SPELLFORUMID = 2;
     if (FORUM.get("topic") && FORUM.get("topic").forum_id == SPELLFORUMID) {
         setupSpellButton();
     }
-    
+</script>
+
+<!-- Магазин в форме сообщения by Lait. -->
+<script type="text/javascript">
+    function fillShop(shopId) {
+        // TODO: refactor
+        let shop = $(".topicpost .post-content");
+        tds = shop.find("td");
+        for (let i = 0; i < tds.length; i++) {
+            tds[i].innerHTML += `<input type="number" value="0"/>`; // smells
+        }
+        let shopButtons = $(".topicpost .post-links ul");
+        shopButtons.append(`<li><a rel="nofollow" href="javascript:void(0)" onclick="createOrder()">Купить</div></li>`);
+    }
+
+    function parsePrice(priceStr) {
+        let pattern = /(\d+) золот.* за (\d*) ?шт./;
+        let result = pattern.exec(priceStr);
+        let price = +result[1];
+        let pricePer = +result[2];
+        if (pricePer == 0) {
+            pricePer = 1;
+        }
+        return [price, pricePer];
+    }
+
+    function createOrder() {
+        // TODO: refactor
+        let template = "[b]{item}[/b] - {amount} - [i]{price}[/i]\n";
+        let shopTable = $(".topicpost .post-content");
+        let items = shopTable.find("td");
+        let output = "";
+        let totalGold = 0;
+        for (let i = 0; i < items.length; i++) {
+            let amount = $(items[i]).find("input").val();
+            let priceString = $(items[i]).find("span").text();
+            let price = parsePrice(priceString); // smell
+            let purchase = price[0] * amount / price[1];
+            if (purchase > 0) {
+                totalGold += purchase;
+                output += template
+                    .replace("{item}", $(items[i]).find("strong").text())
+                    .replace("{amount}", amount)
+                    .replace("{price}", purchase);
+            }
+        }
+        output += `Всего: ${totalGold} золотых`;
+        document.getElementById("main-reply").value += "\n" + output;
+    }
+
+    function clearOrder() {
+        return;
+    }
+
+    let topicId = 8;
+    if (document.URL.indexOf("viewtopic.php?id=" + topicId) > 0) {
+        fillShop();
+    }
 </script>
