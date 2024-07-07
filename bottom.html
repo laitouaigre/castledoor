@@ -145,7 +145,6 @@ $('td#button-link').before('<td id="floatbut" style=\'background-image:url("http
         fetch(url, {
             "credentials": "include",
             "headers": {
-                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0",
                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
                 "Accept-Language": "en-US,en;q=0.5",
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -158,7 +157,7 @@ $('td#button-link').before('<td id="floatbut" style=\'background-image:url("http
                 "Pragma": "no-cache",
                 "Cache-Control": "no-cache"
             },
-            "referrer": "https://castletest.rusff.me/profile.php?section=fields&id=2",
+            "referrer": url,
             "body": postBody,
             "method": "POST",
             "mode": "cors"
@@ -186,7 +185,7 @@ $('td#button-link').before('<td id="floatbut" style=\'background-image:url("http
                 let userId = profile.getElementsByClassName("profile")[0].getElementsByTagName("a")[0].href.split("id=")[1];
                 let fld1 = profile.getElementsByClassName("input-pa-fld1")[0].value;
                 let fld2 = profile.getElementsByClassName("input-pa-fld2")[0].value;
-                updateFld(2, fld1, fld2);
+                updateFld(userId, fld1, fld2);
             });
             insertAfter(newElement, profile.getElementsByClassName("input-pa-fld2")[0]);
         }
