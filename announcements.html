@@ -1,0 +1,64 @@
+<style>
+.announcements {
+    padding: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.div1 {
+    grid-area: 1 / 1 / 2 / 2;
+    border: 1px solid black;
+    text-align: center;
+}
+.div2 {
+    grid-area: 1 / 2 / 2 / 3;
+    border: 1px solid black;
+    text-align: center;
+}
+.div3 {
+    grid-area: 1 / 3 / 2 / 4;
+    border: 1px solid black;
+    text-align: center;
+}
+.div4 {
+    grid-area: 2 / 1 / 3 / 4;
+    border: 1px solid black;
+    text-align: center;
+}
+.div5 {
+    grid-area: 3 / 1 / 4 / 4;
+    border: 1px solid black;
+    text-align: center;
+}
+.div6 {
+    grid-area: 1 / 4 / 2 / 7;
+    border: 1px solid black;
+    text-align: center;
+}
+.div7 {
+    grid-area: 2 / 4 / 4 / 7;
+    border: 1px solid black;
+}
+</style>
+<div class="announcements">
+    <div class="div1">01.01.0000</div>
+    <div class="div2">Понедельник</div>
+    <div class="div3">Солнечно</div>
+    <div class="div4">Замок открыт</div>
+    <div class="div5">Важное событие</div>
+    <div class="div6">Новости</div>
+    <!-- div7 is scrollable textfield that can display html -->
+    <div class="div7">
+        <div style="height: 50px; overflow: scroll;">
+            <p>Новость</p>
+            <p>Новость</p>
+            <p>Новость</p>
+            <p>Новость</p>
+            <p>Новость</p>
+            <p>Новость</p>
+        </div>
+    </div>
+</div>
